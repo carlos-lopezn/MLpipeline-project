@@ -6,13 +6,26 @@ import os
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-
+import starter
 from starter.ml.data import process_data, load_transform
 from starter.ml.model import inference
 
-encoder_path = os.path.join(os.getcwd(), 'model', 'encoder.sav')
-binarizer_path = os.path.join(os.getcwd(), 'model', 'label_binarizer.sav')
-model_path = os.path.join(os.getcwd(), 'model', 'svc_model.sav')
+encoder_path = os.path.join(
+                os.path.dirname(os.path.abspath((starter.__file__))),
+                '..',
+                'model',
+                'encoder.sav')
+binarizer_path = os.path.join(
+                os.path.dirname(os.path.abspath((starter.__file__))),
+                '..',
+                'model',
+                'label_binarizer.sav')
+model_path = os.path.join(
+                os.path.dirname(os.path.abspath((starter.__file__))),
+                '..',
+                'model',
+                'svc_model.sav')
+                
 cat_features = [
     "workclass",
     "education",
