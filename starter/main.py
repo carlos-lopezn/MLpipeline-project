@@ -11,20 +11,18 @@ from starter.ml.data import process_data, load_transform
 from starter.ml.model import inference
 
 encoder_path = os.path.join(
-                os.path.dirname(os.path.abspath((starter.__file__))),
-                '..',
-                'model',
+                os.getcwd(),
+                'data',
                 'encoder.sav')
 binarizer_path = os.path.join(
-                os.path.dirname(os.path.abspath((starter.__file__))),
-                '..',
-                'model',
+                os.getcwd(),
+                'data',
                 'label_binarizer.sav')
 model_path = os.path.join(
-                os.path.dirname(os.path.abspath((starter.__file__))),
-                '..',
-                'model',
-                'svc_model.sav')
+                os.getcwd(),
+                'data',
+                'cleaned_census.csv'
+                )
                 
 cat_features = [
     "workclass",
