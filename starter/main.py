@@ -15,6 +15,7 @@ encoder_path = os.path.join(
                 '..',                
                 '..',
                 'starter',
+                'starter',
                 'data',
                 'encoder.sav')
 binarizer_path = os.path.join(
@@ -22,12 +23,14 @@ binarizer_path = os.path.join(
                 '..',
                 '..',
                 'starter',
+                'starter',
                 'data',
                 'label_binarizer.sav')
 model_path = os.path.join(
                 os.getcwd(),
                 '..',
                 '..',
+                'starter',
                 'starter',
                 'data',
                 'cleaned_census.csv'
