@@ -32,23 +32,18 @@ def inputs_np():
         x_dataset: (numpy) the input patterns for the model
     """
     dataset_df = pd.read_csv(os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        os.pardir,
-        os.pardir,
-        os.pardir,
+        os.getcwd(),
         'data',
         'cleaned_census.csv'
-    )
+        )
     )
 
     encoder_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        os.pardir,
-        os.pardir,
-        os.pardir,
+        os.getcwd(),
         'model',
         'encoder.sav'
     )
+
     x_dataset, _, _, _ = process_data(dataset_df,
                                       categorical_features=cat_features,
                                       label="salary",
@@ -69,29 +64,20 @@ def targets_np():
         y_dataset: (numpy) targets or labels for the input patterns
     """
     dataset_df = pd.read_csv(os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        os.pardir,
-        os.pardir,
-        os.pardir,
+        os.getcwd(),
         'data',
         'cleaned_census.csv'
     )
     )
 
     encoder_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        os.pardir,
-        os.pardir,
-        os.pardir,
+        os.getcwd(),
         'model',
         'encoder.sav'
     )
 
     binarizer_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        os.pardir,
-        os.pardir,
-        os.pardir,
+        os.getcwd(),
         'model',
         'label_binarizer.sav'
     )
@@ -116,13 +102,11 @@ def model():
     returns
         model: (Scikit class) the stored model previously trained
     """
-    model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                              os.pardir,
-                              os.pardir,
-                              os.pardir,
-                              'model',
-                              'svc_model.sav'
-                              )
+    model_path = os.path.join(
+                    os.getcwd(),
+                    'model',
+                    'svc_model.sav'
+                 )
 
     return load_transform(model_path)
 
