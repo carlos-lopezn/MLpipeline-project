@@ -36,5 +36,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        uvicorn ./starter/main:app &
-        pytest
+        cd starter
+        uvicorn main:app &
+        cd ..
+        pwd
+        pytest -vv
