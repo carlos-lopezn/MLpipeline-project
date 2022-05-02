@@ -12,14 +12,17 @@ from starter.ml.model import inference
 
 encoder_path = os.path.join(
                 os.path.dirname(os.path.abspath(starter.__file__)),
+                '..',
                 'model',
                 'encoder.sav')
 binarizer_path = os.path.join(
                 os.path.dirname(os.path.abspath(starter.__file__)),
                 'model',
+                '..',
                 'label_binarizer.sav')
 model_path = os.path.join(
                 os.path.dirname(os.path.abspath(starter.__file__)),
+                '..',
                 'model',
                 'svc_model.sav'
                 )
