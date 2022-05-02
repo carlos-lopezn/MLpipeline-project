@@ -12,20 +12,14 @@ from starter.ml.model import inference
 
 encoder_path = os.path.join(
                 os.getcwd(),
-                '..',                
-                '..',
                 'data',
                 'encoder.sav')
 binarizer_path = os.path.join(
                 os.getcwd(),
-                '..',
-                '..',
                 'data',
                 'label_binarizer.sav')
 model_path = os.path.join(
                 os.getcwd(),
-                '..',
-                '..',
                 'data',
                 'cleaned_census.csv'
                 )
@@ -109,7 +103,6 @@ async def perform_inference(input_data: InputData):
         input_data_dict[key] = [value]
 
     pattern_df = pd.DataFrame.from_dict(input_data_dict)
-    print(os.listdir(os.getcwd()))
 
     columns = [key.replace('_', '-') for key, _ in input_data_dict.items()]
     pattern_df.columns = columns
