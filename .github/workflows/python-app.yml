@@ -40,4 +40,4 @@ jobs:
         uvicorn main:app &
     - name: Test with PyTest
       run: |
-        pytest -vv
+        pytest
