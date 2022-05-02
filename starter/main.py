@@ -21,7 +21,7 @@ binarizer_path = os.path.join(
 model_path = os.path.join(
                 os.getcwd(),
                 'model',
-                'svc_model.csv'
+                'svc_model.sav'
                 )
                 
 cat_features = [
