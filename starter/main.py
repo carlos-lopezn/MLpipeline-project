@@ -12,17 +12,14 @@ from starter.ml.model import inference
 
 encoder_path = os.path.join(
                 os.getcwd(),
-                '.',
                 'data',
                 'encoder.sav')
 binarizer_path = os.path.join(
                 os.getcwd(),
-                '.',
                 'data',
                 'label_binarizer.sav')
 model_path = os.path.join(
                 os.getcwd(),
-                '.',
                 'data',
                 'cleaned_census.csv'
                 )
