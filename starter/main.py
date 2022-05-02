@@ -12,6 +12,7 @@ from starter.ml.model import inference
 
 encoder_path = os.path.join(
                 os.getcwd(),
+                '..',                
                 '..',
                 'starter',
                 'data',
@@ -19,11 +20,13 @@ encoder_path = os.path.join(
 binarizer_path = os.path.join(
                 os.getcwd(),
                 '..',
+                '..',
                 'starter',
                 'data',
                 'label_binarizer.sav')
 model_path = os.path.join(
                 os.getcwd(),
+                '..',
                 '..',
                 'starter',
                 'data',
