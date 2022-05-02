@@ -9,6 +9,7 @@ from aequitas.plotting import Plot
 from aequitas.group import Group
 from aequitas.bias import Bias
 from aequitas.fairness import Fairness
+from sklearn.preprocessing import label_binarize
 from ml.data import process_data, load_transform, save_transform, split_slices
 from ml.model import train_model, compute_model_metrics, inference
 
@@ -24,14 +25,6 @@ cat_features = [
 ]
 
 ap = Plot()
-
-data = pd.read_csv(
-    os.path.join(
-        os.getcwd(),
-        '..',
-        'data',
-        'cleaned_census.csv'))
-
 
 def bias_fairness_report(test_df, y_test, preds):
     """
@@ -80,29 +73,40 @@ def prediction_on_slice(slice_column, test_df, model, encoder, binarizer):
     # Slice test set dependending on name of the column and get performance
     # over each slice
     if slice_column is not None and slice_column in cat_features:
-        print("----------------------------------------------")
-        print(f"Performance over {slice_column} slice")
-        print("----------------------------------------------")
-        slices = split_slices(test_df, slice_column)
-        for key, _ in slices.items():
-            x_test_slice, y_test_slice, _, _ = process_data(
-                slices[key],
-                categorical_features=cat_features,
-                label="salary",
-                training=False,
-                encoder=encoder,
-                lb=binarizer
-            )
-            preds_slice = inference(model, x_test_slice)
-
-            precision_slice, recall_slice, fbeta_slice = compute_model_metrics(
-                y_test_slice, preds_slice)
-
-            print(f"Number of patterns grouped by {key}: {len(x_test_slice)}")
-            print(f"Precision grouped by {key}: {precision_slice}")
-            print(f"Recall grouped by {key}: {recall_slice}")
-            print(f"F1 score grouped by {key}: {fbeta_slice}")
+        output_path = "slice_output.txt"
+        with open(output_path,"w",encoding="UTF-8") as slice_output_file:
             print("----------------------------------------------")
+            print(f"Performance over {slice_column} slice")
+            slice_output_file.write(f"Performance over {slice_column} slice\n")
+            print("----------------------------------------------")
+            slice_output_file.write("----------------------------------------------\n")
+            slices = split_slices(test_df, slice_column)
+            for key, _ in slices.items():
+                x_test_slice, y_test_slice, _, _ = process_data(
+                    slices[key],
+                    categorical_features=cat_features,
+                    label="salary",
+                    training=False,
+                    encoder=encoder,
+                    lb=binarizer
+                )
+                preds_slice = inference(model, x_test_slice)
+
+                precision_slice, recall_slice, fbeta_slice = compute_model_metrics(
+                    y_test_slice, preds_slice)
+
+                print(f"Number of patterns grouped by {key}: {len(x_test_slice)}")
+                slice_output_file.write(f"Number of patterns grouped by {key}: {len(x_test_slice)}\n")
+                print(f"Precision grouped by {key}: {precision_slice}")
+                slice_output_file.write(f"Precision grouped by {key}: {precision_slice}\n")
+                print(f"Recall grouped by {key}: {recall_slice}")
+                slice_output_file.write(f"Recall grouped by {key}: {recall_slice}\n")
+                print(f"F1 score grouped by {key}: {fbeta_slice}")
+                slice_output_file.write(f"F1 score grouped by {key}: {fbeta_slice}\n")
+                print("----------------------------------------------")
+                slice_output_file.write("----------------------------------------------\n")
+                
+            slice_output_file.close()
 
 # Add the necessary imports for the starter code.
 
@@ -123,6 +127,29 @@ def main(training=True, slice_column=None):
     """
     # Add code to load in the data.
 
+    data = pd.read_csv(
+            os.path.join(
+                os.getcwd(),
+                '..',
+                'data',
+                'cleaned_census.csv'))
+
+    model_path = os.path.join(
+                os.getcwd(),
+                '..',
+                'model',
+                'svc_model.sav')
+    encoder_path = os.path.join(
+                os.getcwd(),
+                '..',
+                'model',
+                'encoder.sav')
+    binarizer_path = os.path.join(
+                os.getcwd(),
+                '..',
+                'model',
+                'label_binarizer.sav')
+
     print("Splitting dataset.")
     # Optional enhancement, use K-fold cross validation instead of a
     # train-test split.
@@ -139,30 +166,33 @@ def main(training=True, slice_column=None):
             categorical_features=cat_features,
             label="salary",
             training=False,
-            encoder=encoder,
-            lb=lb
+            encoder=encoder_path,
+            lb=binarizer_path
         )
 
         model = train_model(x_train, y_train)
 
-        model_path = os.path.join(os.getcwd(), '..', 'model', 'svc_model.sav')
         save_transform(model_path, model)
 
     else:
         print("Preprocessing dataset and loading model.")
         _, _, encoder, lb = process_data(
-            train, categorical_features=cat_features, label="salary", training=False)
+                                train, 
+                                categorical_features=cat_features,
+                                label="salary",
+                                training=False,
+                                encoder=encoder_path,
+                                lb=binarizer_path)
 
         x_test, y_test, _, _ = process_data(
             test,
             categorical_features=cat_features,
             label="salary",
             training=False,
-            encoder=encoder,
-            lb=lb
+            encoder=encoder_path,
+            lb=binarizer_path
         )
-
-        model_path = os.path.join(os.getcwd(), '..', 'model', 'svc_model.sav')
+        
         model = load_transform(model_path)
 
     preds = inference(model, x_test)
@@ -177,7 +207,7 @@ def main(training=True, slice_column=None):
 
     bias_fairness_report(test, y_test, preds)
 
-    prediction_on_slice(slice_column, test, model, encoder, lb)
+    prediction_on_slice(slice_column, test, model, encoder_path, binarizer_path)
 
 
 if __name__ == '__main__':

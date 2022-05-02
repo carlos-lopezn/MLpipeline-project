@@ -1,0 +1,12 @@
+Performance over sex slice
+----------------------------------------------
+Number of patterns grouped by Male: 4351
+Precision grouped by Male: 0.9177215189873418
+Recall grouped by Male: 0.11275272161741835
+F1 score grouped by Male: 0.20083102493074792
+----------------------------------------------
+Number of patterns grouped by Female: 2162
+Precision grouped by Female: 0.7083333333333334
+Recall grouped by Female: 0.1596244131455399
+F1 score grouped by Female: 0.260536398467433
+----------------------------------------------
