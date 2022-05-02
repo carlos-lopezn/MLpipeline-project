@@ -33,6 +33,7 @@ def inputs_np():
     """
     dataset_df = pd.read_csv(os.path.join(
         os.getcwd(),
+        'starter',
         'data',
         'cleaned_census.csv'
         )
@@ -40,6 +41,7 @@ def inputs_np():
 
     encoder_path = os.path.join(
         os.getcwd(),
+        'starter',
         'model',
         'encoder.sav'
     )
@@ -65,6 +67,7 @@ def targets_np():
     """
     dataset_df = pd.read_csv(os.path.join(
         os.getcwd(),
+        'starter',
         'data',
         'cleaned_census.csv'
     )
@@ -72,12 +75,14 @@ def targets_np():
 
     encoder_path = os.path.join(
         os.getcwd(),
+        'starter',
         'model',
         'encoder.sav'
     )
 
     binarizer_path = os.path.join(
         os.getcwd(),
+        'starter',
         'model',
         'label_binarizer.sav'
     )
@@ -104,6 +109,7 @@ def model():
     """
     model_path = os.path.join(
                     os.getcwd(),
+                    'starter',
                     'model',
                     'svc_model.sav'
                  )
