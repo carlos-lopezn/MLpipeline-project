@@ -130,7 +130,7 @@ def test_inference(targets_np, model, inputs_np):
     """
     preds = inference(model, inputs_np)
 
-    assert targets_np.shape[0] == preds.shape[0]
+    assert targets_np.shape == preds.shape
     assert preds.all() is not None
 
 

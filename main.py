@@ -16,33 +16,7 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
         exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-encoder_path = os.path.join(
-                os.getcwd(),
-                'model',
-                'encoder.sav')
-binarizer_path = os.path.join(
-                os.getcwd(),
-                'model',
-                'label_binarizer.sav')
-model_path = os.path.join(
-                os.getcwd(),
-                'model',
-                'svc_model.sav'
-                )
-                
-cat_features = [
-    "workclass",
-    "education",
-    "marital-status",
-    "occupation",
-    "relationship",
-    "race",
-    "sex",
-    "native-country",
-]
-
 app = FastAPI()
-
 
 class InputData(BaseModel):
     """
@@ -87,6 +61,36 @@ class InputData(BaseModel):
         }
 
 
+@app.on_event("startup")
+async def startup_event(): 
+    global encoder_path, binarizer_path, cat_features, model
+    encoder_path = os.path.join(
+                os.getcwd(),
+                'model',
+                'encoder.sav')
+    binarizer_path = os.path.join(
+                    os.getcwd(),
+                    'model',
+                    'label_binarizer.sav')
+                    
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+    model_path = os.path.join(
+                    os.getcwd(),
+                    'model',
+                    'svc_model.sav'
+                    )
+    model = load_transform(model_path)    
+
+
 @app.get("/")
 async def greetings():
     """
@@ -119,7 +123,7 @@ async def perform_inference(input_data: InputData):
         training=False,
         encoder=encoder_path,
         lb=binarizer_path)
-    model = load_transform(model_path)
+    
     prediction = inference(model, x_test)
 
     return {'prediction': int(prediction)}
