@@ -31,8 +31,7 @@ jobs:
         version: '2.10.1'
     - name: test envs
       run: |
-        echo ${AWS_ACCESS_KEY_ID}
-        echo ${AWS_SECRET_ACCESS_KEY}
+        printenv
     #- name: Install dependencies
     #  run: |
     #    python -m pip install --upgrade pip
