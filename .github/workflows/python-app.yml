@@ -10,9 +10,9 @@ on:
     branches: [ master ]
 
 env: 
-  AWS_ACCESS_KEY_ID: AKIA42MY2BL5FC3B5LES
-  AWS_SECRET_ACCESS_KEY: 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
-  AWS_DEFAULT_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+  AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+  AWS_DEFAULT_REGION: '${{ secrets.AWS_DEFAULT_REGION }}'
 
 permissions:
   contents: read
