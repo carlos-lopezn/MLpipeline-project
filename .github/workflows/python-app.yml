@@ -23,14 +23,9 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.8"         
-    - uses: iterative/setup-dvc@v1
-      env: 
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - uses: iterative/setup-dvc@v1      
       with:
         version: '2.10.1'
-      run: |
-        dvc pull
     - name: test envs
       run: |
         printenv
@@ -39,7 +34,12 @@ jobs:
     #    python -m pip install --upgrade pip
     #    pip install flake8 pytest
     #    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    
-
+    - name: Pull data
+      env: 
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        dvc pull
     #- name: Lint with flake8
     #  run: |
     #    # stop the build if there are Python syntax errors or undefined names
