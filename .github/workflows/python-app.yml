@@ -15,9 +15,8 @@ permissions:
   contents: read
 
 jobs:
-  environment: MLpipeline
-
   build:
+    environment: MLpipeline
 
     runs-on: ubuntu-latest
 
