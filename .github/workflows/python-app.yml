@@ -9,15 +9,14 @@ on:
   pull_request:
     branches: [ master ]
 
-env: 
-  AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
-  AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
-  AWS_DEFAULT_REGION: '${{ secrets.AWS_DEFAULT_REGION }}'
+
 
 permissions:
   contents: read
 
 jobs:
+  environment: MLpipeline
+
   build:
 
     runs-on: ubuntu-latest
@@ -31,6 +30,10 @@ jobs:
     - uses: iterative/setup-dvc@v1      
       with:
         version: '2.10.1'
+        env: 
+          AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          AWS_DEFAULT_REGION: '${{ secrets.AWS_DEFAULT_REGION }}'
     - name: test envs
       run: |
         printenv
