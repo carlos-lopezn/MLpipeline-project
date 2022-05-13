@@ -131,7 +131,7 @@ def test_inference(targets_np, model, inputs_np):
     preds = inference(model, inputs_np)
 
     assert targets_np.shape == preds.shape
-    assert preds.all() is not None
+    assert len(targets_np) == len(preds[(preds==1)|(preds==0)])
 
 
 def test_compute_model_metrics(targets_np, model, inputs_np):
